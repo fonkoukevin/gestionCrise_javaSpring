@@ -37,24 +37,25 @@ public class SignalementService {
      * @return Le signalement généré et sauvegardé.
      */
     public Signalement generateSignalement(Utilisateur utilisateur) {
-        // Prompt simplifié
+        // Vérifiez l'ID de l'utilisateur reçu
+        logger.info("Utilisateur reçu pour le signalement : ID = {}", utilisateur.getId());
+
+        // Continuez avec le reste de la méthode
         String prompt = "Générer uniquement la description et la localisation d'une crise. " +
                 "Retournez un JSON au format suivant : " +
                 "{\"description\": \"Description de la crise\", \"localisation\": \"Localisation de la crise\"}. " +
                 "Ne fournissez que le JSON, sans texte supplémentaire.";
 
-        // Récupérer la réponse brute d'Ollama
         String response = sendPromptToOllama(prompt);
 
-        // Vérifier si la réponse est un JSON valide
         if (!isValidJson(response)) {
             logger.error("Réponse d'Ollama invalide : {}", response);
             throw new RuntimeException("Réponse d'Ollama invalide : Le JSON attendu n'a pas été généré.");
         }
 
-        // Créer un signalement à partir de la réponse JSON
         return parseSignalementFromResponse(response, utilisateur);
     }
+
 
     public Signalement findSignalementById(Long id) {
         return signalementRepository.findById(id)

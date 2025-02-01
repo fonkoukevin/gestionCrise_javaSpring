@@ -1,5 +1,6 @@
 package com.example.simulateur.Entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "signalement")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Signalement {
 
     @Id
@@ -25,9 +27,10 @@ public class Signalement {
     @Enumerated(EnumType.STRING)
     private StatutSignalement statut = StatutSignalement.PENDING;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Ou FetchType.EAGER selon vos besoins
     @JoinColumn(name = "citoyen_id", nullable = false)
     private Utilisateur citoyen;
+
 
     @Column(name = "date_soumission")
     private LocalDateTime dateSoumission;

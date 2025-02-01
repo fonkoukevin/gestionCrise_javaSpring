@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/signalements")
 public class SignalementController {
@@ -33,9 +34,20 @@ public class SignalementController {
 
     @PostMapping("/generate")
     public ResponseEntity<Signalement> generateSignalement(@RequestParam Long utilisateurId) {
+        System.out.println("Utilisateur ID reçu : " + utilisateurId);
+
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(utilisateurId);
+        if (utilisateur == null) {
+            return ResponseEntity.badRequest().build(); // Retourne un 400 si l'utilisateur n'existe pas
+        }
+
         Signalement signalement = signalementService.generateSignalement(utilisateur);
+        System.out.println("Signalement généré avec ID : " + signalement.getId());
+
         return ResponseEntity.ok(signalement);
     }
+
+
+
 
 }
