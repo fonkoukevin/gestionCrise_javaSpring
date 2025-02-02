@@ -1,0 +1,22 @@
+<mat-card class="signalement-card">
+  <div class="overlay">
+    <h2>Formulaire de Signalement</h2>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="description" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Localisation</mat-label>
+      <input matInput [(ngModel)]="localisation" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Statut</mat-label>
+      <mat-select [(ngModel)]="statut">
+        <mat-option value="PENDING">En attente</mat-option>
+        <mat-option value="IN_PROGRESS">En cours</mat-option>
+        <mat-option value="RESOLVED">Résolu</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Soumettre</button>
+  </div>
+</mat-card>

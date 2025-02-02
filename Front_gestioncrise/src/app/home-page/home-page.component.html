@@ -1,0 +1,21 @@
+
+<app-navbar></app-navbar>
+
+<mat-card class="welcome-card">
+  <div class="overlay">
+    <h1>Bienvenue sur le simulateur de gestion de crise</h1>
+    <p>Un outil innovant pour gérer efficacement les crises.</p>
+    <div class="button-container">
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="utilisateurId !== null"
+        (click)="generateSignalement()">
+        gérer une crise
+      </button>
+    </div>
+  </div>
+</mat-card>
+
+
+

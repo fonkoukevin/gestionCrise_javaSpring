@@ -1,0 +1,121 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h2 class="title">📝 Compte Rendu</h2>
+
+  <!-- ✅ Animation de chargement -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>⏳ Génération en cours... Veuillez patienter environ 50 secondes.</p>
+  </div>
+
+  <!-- ✅ Affichage du compte rendu sous forme de carte -->
+  <div *ngIf="!loading && compteRendu" class="compte-rendu-card">
+    <h3 class="compte-title">📢 Signalement : {{ compteRendu.signalement.description }}</h3>
+    <p class="generated-by">👤 <strong>Généré par :</strong> {{ compteRendu.citoyen.username }}</p>
+
+    <div class="contenu-box">
+      <h4>📜 Contenu du Compte Rendu :</h4>
+      <pre>{{ compteRendu.contenu }}</pre>
+    </div>
+  </div>
+
+  <!-- ✅ Message d'erreur si aucun compte rendu n'est disponible -->
+  <p *ngIf="!loading && !compteRendu" class="error-message">❌ Aucun compte rendu disponible.</p>
+</div>
+
+<!-- ✅ Ajout du CSS -->
+<style>
+  /* ✅ Style général */
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .title {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  /* ✅ Animation de chargement */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f39c12;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+  .spinner {
+    border: 4px solid rgba(243, 156, 18, 0.3);
+    border-left-color: #f39c12;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* ✅ Carte de compte rendu */
+  .compte-rendu-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .compte-title {
+    color: #090b0b;
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  .generated-by {
+    color: #16a085;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  /* ✅ Contenu du compte rendu */
+  .contenu-box {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .contenu-box h4 {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  pre {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* ✅ Message d'erreur */
+  .error-message {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+</style>

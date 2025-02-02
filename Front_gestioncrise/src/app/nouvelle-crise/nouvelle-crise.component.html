@@ -1,0 +1,14 @@
+<mat-card class="crise-card">
+  <h1>{{ crise.title }}</h1>
+  <p>{{ crise.description }}</p>
+
+  <h3>Impacts :</h3>
+  <ul>
+    <li *ngFor="let impact of crise.impacts">{{ impact }}</li>
+  </ul>
+
+  <h3>Actions recommandées :</h3>
+  <ul>
+    <li *ngFor="let action of crise.actions">{{ action }}</li>
+  </ul>
+</mat-card>

@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+
+<div class="signalement-container">
+  <h2>📌 Dernier Signalement</h2>
+
+  <div *ngIf="signalement; else noSignalement" class="signalement-card">
+    <p><strong>📝 Description :</strong> {{ signalement?.description }}</p>
+    <p><strong>📍 Localisation :</strong> {{ signalement?.localisation }}</p>
+
+    <!-- ✅ Bouton pour voir les actions liées au signalement -->
+    <button (click)="voirActions(signalement?.id)" class="action-btn"> 🚨Réagir à cette Crise</button>
+  </div>
+
+  <ng-template #noSignalement>
+    <p class="warning">⚠️ Aucun signalement trouvé. Veuillez en générer un.</p>
+  </ng-template>
+</div>
+
+<!-- ✅ Ajout direct du CSS -->
+<style>
+  .signalement-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+  }
+
+  h2 {
+      color: #2c3e50;
+      font-size: 22px;
+      margin-bottom: 15px;
+  }
+
+  .signalement-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  p {
+      font-size: 16px;
+      color: #333;
+      margin: 10px 0;
+  }
+
+  .action-btn {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+      margin-top: 15px;
+  }
+
+  .action-btn:hover {
+      background-color: #2980b9;
+  }
+
+  .warning {
+      color: #e74c3c;
+      font-size: 18px;
+      font-weight: bold;
+  }
+</style>

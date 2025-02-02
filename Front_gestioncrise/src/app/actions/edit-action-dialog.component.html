@@ -1,0 +1,7 @@
+<h2>Modifier l'Action</h2>
+<input type="text" [(ngModel)]="description" placeholder="Nouvelle description">
+
+<div class="dialog-buttons">
+  <button mat-button (click)="close()">❌ Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">💾 Enregistrer</button>
+</div>

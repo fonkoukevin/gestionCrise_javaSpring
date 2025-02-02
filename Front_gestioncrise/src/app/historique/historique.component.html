@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <h2>📜 Historique des Crise et les actions effectuer</h2>
+  
+    <div *ngIf="loading">⏳ Chargement de l'historique...</div>
+  
+    <div *ngIf="!loading && getCrises().length === 0">
+      ⚠️ Aucun historique disponible ou aucun ation lier a une crise.
+    </div>
+  
+    <div *ngFor="let crise of getCrises()">
+      <h3>🌍 {{ crise }}</h3>
+      <ul>
+        <li *ngFor="let action of historique[crise]">
+          ✅ {{ action.description }} (Terminée le : {{ action.dateCompletion | date:'dd/MM/yyyy HH:mm' }})
+        </li>
+      </ul>
+    </div>
+  </div>
+  
