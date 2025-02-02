@@ -6,6 +6,7 @@ import com.example.simulateur.Entites.Signalement;
 import com.example.simulateur.Entites.Utilisateur;
 import com.example.simulateur.Repositories.ActionRepository;
 import com.example.simulateur.Repositories.CompteRenduRepository;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CompteRenduService {
 
     private static final Logger logger = LoggerFactory.getLogger(CompteRenduService.class);

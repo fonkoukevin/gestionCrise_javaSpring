@@ -26,7 +26,7 @@ public class CompteRendu {
     @JoinColumn(name = "signalement_id", nullable = false)
     private Signalement signalement;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "citoyen_id", nullable = false)
     private Utilisateur citoyen;
 

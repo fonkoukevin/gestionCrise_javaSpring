@@ -9,6 +9,8 @@ import com.example.simulateur.Repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -44,5 +46,52 @@ public class ActionService {
         System.out.println("📤 Enregistrement de l'action : " + action);
         return actionRepository.save(action);
     }
+
+    public Action findActionById(Long actionId) {
+        return actionRepository.findById(actionId)
+                .orElseThrow(() -> new RuntimeException("❌ Action non trouvée avec ID : " + actionId));
+    }
+
+
+    public Action updateActionStatus(Long actionId, String newStatus) {
+        Action action = actionRepository.findById(actionId)
+                .orElseThrow(() -> new RuntimeException("❌ Action non trouvée avec ID : " + actionId));
+
+        try {
+            // ✅ Vérification et conversion sécurisée en Enum
+            Action.StatutAction statutEnum = Action.StatutAction.valueOf(newStatus.trim().toUpperCase());
+            action.setStatut(statutEnum);
+
+            // ✅ Mettre à jour la date de completion si l'action est DONE
+            if (statutEnum == Action.StatutAction.DONE) {
+                action.setDateCompletion(LocalDateTime.now());
+            } else {
+                action.setDateCompletion(null); // Remettre à null si ce n'est plus DONE
+            }
+
+            return actionRepository.save(action);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("❌ Statut invalide : " + newStatus + " - Statuts acceptés : " +
+                    Arrays.toString(Action.StatutAction.values()));
+        }
+    }
+
+    public void deleteAction(Long actionId) {
+        Action action = actionRepository.findById(actionId)
+                .orElseThrow(() -> new RuntimeException("❌ Action non trouvée avec ID : " + actionId));
+
+        actionRepository.delete(action);
+        System.out.println("🗑 Action supprimée : " + action.getId());
+    }
+
+
+    public Action updateAction(Long actionId, String newDescription) {
+        Action action = actionRepository.findById(actionId)
+                .orElseThrow(() -> new RuntimeException("❌ Action non trouvée avec ID : " + actionId));
+
+        action.setDescription(newDescription);
+        return actionRepository.save(action);
+    }
+
 
 }
