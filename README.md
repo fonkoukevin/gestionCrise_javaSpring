@@ -12,7 +12,21 @@ Technologies Utilisées:
 
 1🔹 Frontend (Angular)
 
+Installer Angular CLI
+
+Installe Angular CLI :
+
+npm install -g @angular/cli
+
+Vérifie que l’installation s’est bien passée :
+
+ng version
+
+cd gestionCrise_javaSpring
+cd Front_gestioncrise
+
 npm install
+ng serve
 
 lancer le projet : ng serve
 
