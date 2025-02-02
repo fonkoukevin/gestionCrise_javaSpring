@@ -1,5 +1,6 @@
 package com.example.simulateur.Entites;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Signalement {
 
     @ManyToOne(fetch = FetchType.LAZY) // Ou FetchType.EAGER selon vos besoins
     @JoinColumn(name = "citoyen_id", nullable = false)
+    @JsonBackReference
     private Utilisateur citoyen;
 
 

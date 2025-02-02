@@ -28,20 +28,21 @@ public class ActionService {
     }
 
     public Action saveAction(Action action, Long signalementId) {
-        // Vérifier si le signalement existe
         Signalement signalement = signalementRepository.findById(signalementId)
-                .orElseThrow(() -> new RuntimeException("Signalement avec ID " + signalementId + " non trouvé."));
+                .orElseThrow(() -> new RuntimeException("❌ Signalement non trouvé avec ID : " + signalementId));
 
-        // Vérifier si l'utilisateur assigné existe
-        Long assigneeId = action.getAssignee().getId();
-        Utilisateur assignee = utilisateurRepository.findById(assigneeId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur avec ID " + assigneeId + " non trouvé."));
-
-        // Lier le signalement et l'utilisateur à l'action
         action.setSignalement(signalement);
-        action.setAssignee(assignee);
 
-        // Sauvegarder l'action
+        if (action.getAssignee() == null) {
+            System.out.println("⚠️ Aucun assignee spécifié, affectation d'un utilisateur par défaut...");
+            Utilisateur utilisateur = utilisateurRepository.findById(signalement.getCitoyen().getId())
+                    .orElseThrow(() -> new RuntimeException("❌ Utilisateur non trouvé avec ID : " + signalement.getCitoyen().getId()));
+
+            action.setAssignee(utilisateur);
+        }
+
+        System.out.println("📤 Enregistrement de l'action : " + action);
         return actionRepository.save(action);
     }
+
 }

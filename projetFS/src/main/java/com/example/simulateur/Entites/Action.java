@@ -1,5 +1,7 @@
 package com.example.simulateur.Entites;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "action")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ✅ Pour éviter l'erreur Jackson
 public class Action {
 
     @Id
@@ -24,6 +27,7 @@ public class Action {
 
     @ManyToOne
     @JoinColumn(name = "signalement_id", nullable = false)
+    @JsonBackReference
     private Signalement signalement;
 
     @ManyToOne(fetch = FetchType.LAZY)

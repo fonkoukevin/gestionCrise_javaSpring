@@ -1,5 +1,6 @@
 package com.example.simulateur.Entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "compterendu")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ✅ Pour éviter l'erreur Jackson
 public class CompteRendu {
 
     @Id

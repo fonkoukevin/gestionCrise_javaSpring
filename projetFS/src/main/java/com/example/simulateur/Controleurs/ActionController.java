@@ -3,6 +3,7 @@ package com.example.simulateur.Controleurs;
 import com.example.simulateur.Entites.Action;
 import com.example.simulateur.Services.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,30 +16,26 @@ public class ActionController {
     @Autowired
     private ActionService actionService;
 
-    // ✅ Endpoint pour récupérer les actions liées à un signalement
     @GetMapping("/signalement/{signalementId}")
     public ResponseEntity<List<Action>> getActionsBySignalement(@PathVariable Long signalementId) {
-        List<Action> actions = actionService.findActionsBySignalementId(signalementId);
-
-        if (actions == null || actions.isEmpty()) {
-            return ResponseEntity.notFound().build(); // ✅ Retourne 404 si aucune action n'est trouvée
-        }
-
-        return ResponseEntity.ok(actions);
+        return ResponseEntity.ok(actionService.findActionsBySignalementId(signalementId));
     }
 
-    // ✅ Endpoint pour enregistrer une action liée à un signalement
     @PostMapping("/signalement/{signalementId}")
     public ResponseEntity<Action> saveAction(
             @RequestBody Action action,
             @PathVariable Long signalementId
     ) {
-        Action savedAction = actionService.saveAction(action, signalementId);
+        try {
+            if (action.getDescription() == null || action.getDescription().trim().isEmpty()) {
+                return ResponseEntity.badRequest().build(); // ✅ Vérifier si la description est vide
+            }
 
-        if (savedAction == null) {
-            return ResponseEntity.badRequest().build(); // ✅ Retourne 400 si l'action n'a pas pu être créée
+            Action savedAction = actionService.saveAction(action, signalementId);
+            return ResponseEntity.ok(savedAction);
+        } catch (Exception e) {
+            e.printStackTrace(); // ✅ Log d'erreur pour voir le problème
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        return ResponseEntity.ok(savedAction);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.simulateur.Entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "utilisateur")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ✅ Pour éviter l'erreur Jackson
 public class Utilisateur {
 
     @Id
@@ -34,7 +33,6 @@ public class Utilisateur {
     private LocalDateTime dateCreation;
 
     @OneToMany(mappedBy = "citoyen", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Signalement> signalements = new ArrayList<>();
 
     @PrePersist

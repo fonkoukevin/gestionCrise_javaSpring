@@ -47,7 +47,14 @@ public class SignalementController {
         return ResponseEntity.ok(signalement);
     }
 
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Signalement> getSignalementById(@PathVariable Long id) {
+        Signalement signalement = signalementService.findById(id);
+        if (signalement == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(signalement);
+    }
 
 
 }

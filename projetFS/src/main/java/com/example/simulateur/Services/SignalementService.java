@@ -134,4 +134,8 @@ public class SignalementService {
             throw new RuntimeException("Erreur lors de la génération du signalement : réponse JSON invalide.");
         }
     }
+
+    public Signalement findById(Long id) {
+        return signalementRepository.findById(id).orElse(null);
+    }
 }
